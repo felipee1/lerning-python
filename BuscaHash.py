@@ -24,6 +24,9 @@ def main():
             buscar(lista,busca,ordem)
         elif numero == 3:
             listar(lista)
+        elif numero == 0:
+            c=0
+            print('\n Vlw Falooow!')
 
 def inserir(lista,ordem,valor):
     no=[]
