@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 class Node: 
   def __init__(self, cargo=None, next=None): 
     self.data = cargo 
@@ -12,6 +14,7 @@ class LinkedList:
 
     def add_node(self, data, cdr):
         new_node = Node() # create a new node
+
         new_node.data = data
         new_node.cdr = cdr # link the new node to the 'previous' node.
         self.cur_node = new_node #  set the current node to the new one.
@@ -22,8 +25,8 @@ class LinkedList:
             print(node.data)
             node = node.cdr
 
-matriz = [ [3,5,6] ,[1,2,3] ,[7,8,9] ]
-objetivo = [ [1,2,3], [3,5,6], [7,8,9] ]
+matriz = [ [1,2,3], [9,5,6], [8,4,7] ]
+objetivo = [ [1,2,3], [4,5,6], [7,8,9] ]
 lista =[matriz]
 no = LinkedList()
 no.add_node(matriz,None)
@@ -32,41 +35,42 @@ def sucessor(matriz,lista,no):
         for j in range(len(matriz[i])):
             if(matriz[i][j]==9):
                 if(i+1<3):
-                    aux = list.copy(matriz)
+                    aux = deepcopy(matriz)
                     aux[i][j]=aux[i+1][j]
                     aux[i+1][j]=9
-                    print(aux,matriz,"a")
-                    input()
                     no.add_node(aux,matriz)
                     lista.append(aux)
+                    #print(aux, "baixo")
                 if(j+1<3):
-                    aux = list.copy(matriz)
+                    aux = deepcopy(matriz)
                     aux[i][j]=aux[i][j+1]
                     aux[i][j+1]=9
-                    print(aux,matriz,"b")
-                    input()
                     no.add_node(aux,matriz)
                     lista.append(aux)
-                if(i-1>0):
-                    aux = list.copy(matriz)                   
+                    #print(aux, "dir")
+                if(i-1>=0):
+                    aux = deepcopy(matriz)                   
                     aux[i][j]=aux[i-1][j]
                     aux[i-1][j]=9
-                    print(aux,matriz,"c")
-                    input()
                     no.add_node(aux,matriz)
                     lista.append(aux)
-                if(j-1>0):
-                    aux = list.copy(matriz)
+                    #print(aux, "cima")
+                if(j-1>=0):
+                    aux = deepcopy(matriz)
                     aux[i][j]=aux[i][j-1]
                     aux[i][j-1]=9
-                    print(aux,matriz,"d")
-                    input()
                     no.add_node(aux,matriz)
                     lista.append(aux)
+                    #print(aux, "esquerda")
+def buscaLargura(lista,no):
+     while(lista[0]!=objetivo):
+         sucessor(lista[0],lista,no)
+         del(lista[0])
+     print("este é o fera",lista[0])
+     
+def buscaProfundidade(lista,no):
+     while(lista[len(lista)-1]!=objetivo):
+          sucessor(lista[len(lista)-1],lista,no)
+     print("este é o fera",lista[len(lista)-1])
 
-while(lista[0]!=objetivo):
-    sucessor(lista[0],lista,no)
-    del(lista[0])
-    print(lista[0])
-print("este é o fera",lista[0])
-
+buscaProfundidade(lista,no)
