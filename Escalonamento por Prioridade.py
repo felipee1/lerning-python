@@ -1,45 +1,38 @@
 from beautifultable import BeautifulTable
 
 table = BeautifulTable()
-table.column_headers = ["Processo(s)", "Tempo de Execução", "Prioridade"]
+table.column_headers = ["Processo(s)", "Tempo de Execução", "Ordem por tempo de Prioridade","Tempo de espera"]
 
-cont = 0
-prior = []
-aux = 0
-aux2 = 0
-t = 0
+processo = []
+tesp = 0
 
 qtd_processos = int(input("Insira a quantidade de processos -> "))
 temp_execut = input("Insira o tempo de execução de cada processo -> ")
+forma = input("Qual forma de tempo de prioridade deseja? (maior ou menor) -> ")
 te = temp_execut.split()
-#opcao = input("Como deseja realizar o escalonamento de prioridade? (maior ou menor) ")
 
-#if(opcao == 'menor'):
-while(qtd_processos > cont):
+if(forma == 'menor'):
 
-    if(cont == 0):
-        prior.append(te[cont])
-        print(prior[0],'---> primeiro if')
-    else:
-        if(te[cont] < prior[0]):
-            aux = te[cont]
-            aux2 = prior[0]
-            prior[0] = aux
-            prior.insert(1,aux2)
-            print(prior,'--> segundo if')
+    temp = sorted(te, key=int)
+    
+    for index, i in enumerate(te):
+
+        if(index == 0):
+            tesp = 0
         else:
-            if(te[cont] < prior[cont-1]):
-                aux = te[cont]
-                aux2 = prior[cont-1]
-                prior[cont-1] = aux
-                prior.append(aux2)
-                print(prior,'--> terceiro if')
-            else:
-                prior.append(te[cont])
-                print(prior,'---> else')
+            tesp += int(temp[index-1])
 
-    #if(p == te[cont]):
-        table.append_row([cont,te[cont],p[cont]])
-        cont += 1
+        table.append_row([index,i,temp[index],tesp])
+else:
+    temp = sorted(te, key=int, reverse=True)
+    
+    for index, i in enumerate(te):
+        
+        if(index == 0):
+            tesp = 0
+        else:
+            tesp += int(temp[index-1])
 
+        table.append_row([index,i,temp[index],tesp])
+        
 print (table)
