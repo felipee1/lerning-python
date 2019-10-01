@@ -3,7 +3,6 @@ from beautifultable import BeautifulTable
 table = BeautifulTable()
 table.column_headers = ["Processo(s)", "Tempo de Execução", "Ordem por tempo de Prioridade","Tempo de espera"]
 
-processo = []
 tesp = 0
 
 qtd_processos = int(input("Insira a quantidade de processos -> "))
